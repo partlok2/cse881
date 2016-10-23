@@ -13,8 +13,17 @@ import static spark.Spark.get;
 
 import com.heroku.sdk.jdbc.DatabaseUrl;
 
+
+
 public class Loan{
+	
 	public int id;
 	public double loanAmount;
 	public double defaultOdds;
+	
+	public Loan(int id, double loanAmount, double defaultOdds){
+		this.id = id;
+		this.loanAmount = loanAmount;
+		this.defaultOdds = defaultOdds;
+	}
 }
