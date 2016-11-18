@@ -13,6 +13,7 @@ import java.net.URISyntaxException;
 
 import static spark.Spark.*;
 import spark.template.freemarker.FreeMarkerEngine;
+import weka.classifiers.Classifier;
 import spark.ModelAndView;
 import static spark.Spark.get;
 
@@ -62,7 +63,18 @@ public class Main {
         if (connection != null) try{connection.close();} catch(SQLException e){}
       }
     }, new FreeMarkerEngine());
-
+	
+	  /* This is basic Weka code. See the ProsperClassifier class
+	  try {
+		  ProsperClassifier pc = ProsperClassifier.getInstance();
+		  pc.buildModel("prosper_training_data.arff");
+		  
+		  pc.evaluate("prosper_training_data.arff");		  
+	  } catch (Exception e) {
+		  System.err.println("Error testing model");
+	  }
+	  */
+	  
   }
 
 }

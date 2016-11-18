@@ -45,6 +45,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/joel/Data Mining/cse881/weka.jar"/>
+	<classpathentry kind="lib" path="lib/weka.jar"/>
+	<classpathentry kind="lib" path="lib/weka-src.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
