@@ -67,9 +67,13 @@ public class Main {
 	  /* This is basic Weka code. See the ProsperClassifier class
 	  try {
 		  ProsperClassifier pc = ProsperClassifier.getInstance();
-		  pc.buildModel("prosper_training_data.arff");
+		  pc.loadModel("prosper_training_data.arff");
 		  
-		  pc.evaluate("prosper_training_data.arff");		  
+		  //pc.evaluate("prosper_training_data.arff");	
+		  
+		  // Call below function wih valid Instances object to predict instances
+		  // Expected attributes, ordering, and type can be found in "prosper_training_data.arff"
+		  // HashMap<Integer, Double> predictions = pc.predictInstances(new Instances());	  
 	  } catch (Exception e) {
 		  System.err.println("Error testing model");
 	  }
