@@ -1,0 +1,49 @@
+An arff file is structured as shown below starting at @relation all_data. Each subsequent @attribute line shows the expected name and type of the attribute
+in the expected order. For nominal attributes, the valid options are in brackets. 
+loan_origination_date is converted from a standard date to a number by floor((year-1900)*365 + (number of days in 'year' up to the 'day')). 7/20/1954 is 19925
+fico_score is just the lower end of the range, so 680-720 becomes 680
+first_recorded_credit_line is converted from a standard date just like loan_origination_data
+
+@relation all_data
+
+@attribute loan_origination_date numeric
+@attribute listing_amount numeric
+@attribute estimated_return numeric
+@attribute estimated_loss_rate numeric
+@attribute lender_yield numeric
+@attribute listing_term {36, 60}
+@attribute listing_monthly_payment numeric
+@attribute fico_score numeric
+@attribute prosper_score {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}
+@attribute stated_monthly_income numeric
+@attribute dti_wprosper_loan numeric
+@attribute months_employed numeric
+@attribute prior_prosper_loans_active numeric
+@attribute prior_prosper_loans numeric
+@attribute monthly_debt numeric
+@attribute current_delinquencies numeric
+@attribute delinquencies_last7_years numeric
+@attribute first_recorded_credit_line numeric
+@attribute credit_lines_last7_years numeric
+@attribute inquiries_last6_months numeric
+@attribute amount_delinquent numeric
+@attribute current_credit_lines numeric
+@attribute bankcard_utilization numeric
+@attribute total_open_revolving_accounts numeric
+@attribute installment_balance numeric
+@attribute real_estate_balance numeric
+@attribute revolving_balance numeric
+@attribute real_estate_payment numeric
+@attribute total_inquiries numeric
+@attribute total_trade_items numeric
+@attribute satisfactory_accounts numeric
+@attribute delinquencies_over30_days numeric
+@attribute delinquencies_over60_days numeric
+@attribute delinquencies_over90_days numeric
+@attribute is_homeowner {False, True}
+@attribute prosper_rating {A, AA, B, C, D, E, HR}
+@attribute label {0, 1}
+
+@data
+41479,10000,0.0782,0.0399,0.1234,60,229.28,620,8,15833.3333,0.08,165,1,2,1107,0,0,34388,25,1,0,8,0,4,17685,363280,10068,2477,5,25,17,6,0,0,True,A,0
+41423,7500,0.0645,0.0274,0.0949,60,161.17,640,10,5833.3333,0.22,201,0,1,1121,0,0,34101,27,0,0,17,0.75,14,14392,129146,20047,983,5,27,25,3,1,0,False,A,0
