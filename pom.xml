@@ -32,7 +32,12 @@
       <artifactId>jscience</artifactId>
       <version>4.3.1</version>
     </dependency>
-  </dependencies>
+    <dependency>
+    	<groupId>nz.ac.waikato.cs</groupId>
+    	<artifactId>weka</artifactId>
+    	<version>0.0.1-SNAPSHOT</version>
+    </dependency>
+   </dependencies>
   <build>
     <plugins>
       <plugin>
