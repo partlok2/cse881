@@ -35,7 +35,21 @@
     <dependency>
     	<groupId>nz.ac.waikato.cms.weka</groupId>
     	<artifactId>weka-stable</artifactId>
-    	<version>3.8.0</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.apache.httpcomponents</groupId>
+    	<artifactId>httpclient</artifactId>
+    	<version>4.5.2</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.json</groupId>
+    	<artifactId>json</artifactId>
+    	<version>20162012</version>
+    </dependency>
+    <dependency>
+    	<groupId>com.google.code.gson</groupId>
+    	<artifactId>gson</artifactId>
+    	<version>2.8.0</version>
     </dependency>
    </dependencies>
   <build>
