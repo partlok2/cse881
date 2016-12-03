@@ -49,11 +49,10 @@ public class ProsperWrapper {
 			do
 			{
 				URI lURI = new URIBuilder().setScheme("https")
-										  .setHost("api.prosper.com/v1")
-										  .setPath("/search/listings")
+										  .setHost("api.prosper.com/v1/")
+										  .setPath("search/listings/")										  
 										  .setParameter("offset", Integer.toString( lOffset ))
-										  .setParameter("limit", Integer.toString( PAGINATION_LIMIT ) )
-										  .setParameter("include_creditbureau_values", "true")
+										  .setParameter("limit", Integer.toString( PAGINATION_LIMIT ) )	
 										  .build();			
 				HttpGet lHTTPGet = new HttpGet( lURI );
 				lHTTPGet.addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + aOAuthToken);
@@ -126,7 +125,8 @@ public class ProsperWrapper {
 	        if (entity == null) {
 	            throw new ClientProtocolException("Response contains no content");
 	        }
-	        return new JSONObject( EntityUtils.toString(entity) );
+	        String tmp = EntityUtils.toString(entity);
+	        return new JSONObject( tmp );
 	    }
 	};
 }
