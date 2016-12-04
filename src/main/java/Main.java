@@ -6,6 +6,27 @@ import weka.core.Attribute;
 import weka.core.DenseInstance;
 import weka.core.Instances;
 
+import static javax.measure.unit.SI.KILOGRAM;
+import javax.measure.quantity.Mass;
+import org.jscience.physics.model.RelativisticModel;
+import org.jscience.physics.amount.Amount;
+
+import java.sql.*;
+import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Map;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import static spark.Spark.*;
+import spark.template.freemarker.FreeMarkerEngine;
+import weka.classifiers.Classifier;
+import spark.ModelAndView;
+import static spark.Spark.get;
+
+import com.heroku.sdk.jdbc.DatabaseUrl;
+
 
 public class Main {
 
@@ -46,16 +67,21 @@ public class Main {
 	  "delinquencies_over90_days",
 	  "is_homeowner",
 	  "prosper_rating",
-	  "label"};
+	  "label",
+	  "listing_number"};
 	
 	public static void main(String[] args) {
-		ArrayList<Attribute> lAttributes = initializeAttributes();
+		port(Integer.valueOf(System.getenv("PORT")));
+	    staticFileLocation("/public");
+	    
+	    
+	    ArrayList<Attribute> lAttributes = initializeAttributes();
 		
 		ProsperWrapper pw = new ProsperWrapper("friede80@gmail.com", "5t*ZCiolp*!&G28");
 		String token = pw.getOAuthToken();
 		List<JSONObject> currentListings = pw.getListings( token );
 		  
-		Instances lProsperData = buildInstances(lAttributes, currentListings);		  
+		Instances lProsperData = buildInstances(lAttributes, currentListings);	
 		  
 	      // This is basic Weka code. See the ProsperClassifier class
 		  try {
@@ -66,11 +92,23 @@ public class Main {
 			  // Call below function wih valid Instances object to predict instances
 			  // Expected attributes, ordering, and type can be found in "prosper_training_data.arff"
 			  
-			  HashMap<Integer, Double> predictions = pc.predictInstances(lProsperData);	 
+			  HashMap<Integer, Double> predictions = pc.predictInstances(lProsperData);	
 			  System.out.println( predictions.get(2).toString() );
+			  
+			  get("/", (request, response) -> {
+			        ProsperLoans loans = new ProsperLoans();
+			        return loans.getHTML(predictions, lProsperData);
+			    });
+				
+			  
 		  } catch (Exception e) {
 			  System.err.println("Error testing model");
-		  }	  
+		  }	
+		  
+
+	    
+		
+		  
 	}
 
 	private static ArrayList<Attribute> initializeAttributes()
@@ -136,7 +174,7 @@ public class Main {
 		
 		for( JSONObject listing : aCurrentListings )
 		{
-			DenseInstance inst = new DenseInstance(37);
+			DenseInstance inst = new DenseInstance(38);
 			  
 			for( int i = 0; i < attributeNames.length; i++ )
 			{
@@ -188,6 +226,9 @@ public class Main {
 				  		break;
 				  	case 36: //Label
 				  		value = 0; //?
+				  		break;
+				  	case 37: //Loan ID
+				  		value = listing.getInt(attributeNames[i]);
 				  		break;
 				  	//Don't have the following attributes - Use 0
 				  	case 11: //Months Employed

@@ -18,12 +18,16 @@ import com.heroku.sdk.jdbc.DatabaseUrl;
 public class Loan{
 	
 	public int id;
-	public double loanAmount;
-	public double defaultOdds;
+	public int loanAmount;
+	public int fico;
+	public int monthlyIncome;
+	public int monthlyDebt;
 	
-	public Loan(int id, double loanAmount, double defaultOdds){
-		this.id = id;
+	public Loan(int d, int loanAmount, int fico, int monthlyIncome, int monthlyDebt){
+		this.id = d;
 		this.loanAmount = loanAmount;
-		this.defaultOdds = defaultOdds;
+		this.fico = fico * 10;
+		this.monthlyIncome = monthlyIncome;
+		this.monthlyDebt = monthlyDebt;
 	}
 }
