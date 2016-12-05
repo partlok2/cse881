@@ -1,4 +1,6 @@
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Map;
@@ -47,6 +49,12 @@ public class ProsperLoans{
 		
 		//Header
 		outputHTML = outputHTML + "<h1 align=\"center\">Prosper Loan Default Classification: CSE 881</h1><hr>";
+		long yourmilliseconds = System.currentTimeMillis();
+		SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");    
+		Date resultdate = new Date(yourmilliseconds);
+		System.out.println(sdf.format(resultdate));
+		outputHTML = outputHTML + "<h2 align=\"center\">Updated: " + sdf.format(resultdate) + "</h2>";
+		outputHTML = outputHTML + "<h5 align=\"center\">All loans listed have been flagged as \"Not Likely to Default\" by the model</h5><hr>";
 				
 		//A Classification
 		outputHTML = outputHTML + "<h2>Classification: A</h2>";
