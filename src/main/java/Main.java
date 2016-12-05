@@ -230,12 +230,18 @@ public class Main {
 				  	case 37: //Loan ID
 				  		value = listing.getInt(attributeNames[i]);
 				  		break;
-				  	//Don't have the following attributes - Use 0
+				  	//Don't have the following attributes - Use median values
 				  	case 11: //Months Employed
+				  		value = 70;
+				  		break;
 				  	case 24: //Installment Balance
+				  		value = 17597;
+				  		break;
 				  	case 25: //Real Estate Balance
+				  		value = 29293;
+				  		break;
 				  	case 27: //Real Estate Payment
-				  		value = 0;
+				  		value = 370;
 				  		break;			  		
 				  	default:
 				  		value = listing.getDouble( attributeNames[i] );
