@@ -1,3 +1,4 @@
+import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.List;
@@ -71,8 +72,8 @@ public class Main {
 	  "listing_number"};
 	
 	public static void main(String[] args) {
-		port(Integer.valueOf(System.getenv("PORT")));
-	    staticFileLocation("/public");
+		//port(Integer.valueOf(System.getenv("PORT")));
+	    //staticFileLocation("/public");
 	    
 	    
 	    ArrayList<Attribute> lAttributes = initializeAttributes();
@@ -174,81 +175,86 @@ public class Main {
 		
 		for( JSONObject listing : aCurrentListings )
 		{
-			DenseInstance inst = new DenseInstance(38);
-			  
-			for( int i = 0; i < attributeNames.length; i++ )
-			{
-				double value;
-				switch( i )
+			try {
+				DenseInstance inst = new DenseInstance(38);
+				  
+				for( int i = 0; i < attributeNames.length; i++ )
 				{
-					case 0: //Loan Origination Date -- Use creation date instead
-						value = dateToDouble( listing.getString("listing_creation_date") );
-				  		break;				  
-				  	case 7: //FICO Score
-				  		value = Double.parseDouble( listing.getString( attributeNames[i] ).substring(0, 2) );
-				  		break;
-				  	case 8: //Prosper Score
-				  		value = listing.getInt( attributeNames[i] )- 1;
-				  		break;
-				  	case 17: //First Recorded Credit Line
-				  		value = dateToDouble( listing.getString(attributeNames[i]));
-				  		break;			  	
-				  	case 34: //Is home owner
-				  		value = listing.getBoolean( attributeNames[i] ) ? 1 : 0;
-				  		break;
-				  	case 35: //Prosper Rating
-				  		switch(listing.getString( attributeNames[i] ))
-				  		{
-					  		case "A":
-					  			value = 0;
-					  			break;
-					  		case "AA":
-					  			value = 1;
-					  			break;
-					  		case "B":
-					  			value = 2;
-					  			break;
-					  		case "C":
-					  			value = 3;
-					  			break;
-					  		case "D":
-					  			value = 4;
-					  			break;
-					  		case "E":
-					  			value = 5;
-					  			break;
-					  		case "HR":
-					  			value = 6;
-					  			break;
-					  		default:
-					  			value = -1;
-				  		}
-				  		break;
-				  	case 36: //Label
-				  		value = 0; //?
-				  		break;
-				  	case 37: //Loan ID
-				  		value = listing.getInt(attributeNames[i]);
-				  		break;
-				  	//Don't have the following attributes - Use median values
-				  	case 11: //Months Employed
-				  		value = 70;
-				  		break;
-				  	case 24: //Installment Balance
-				  		value = 17597;
-				  		break;
-				  	case 25: //Real Estate Balance
-				  		value = 29293;
-				  		break;
-				  	case 27: //Real Estate Payment
-				  		value = 370;
-				  		break;			  		
-				  	default:
-				  		value = listing.getDouble( attributeNames[i] );
+					double value;
+					switch( i )
+					{
+						case 0: //Loan Origination Date -- Use creation date instead
+							value = dateToDouble( listing.getString("listing_creation_date") );
+					  		break;				  
+					  	case 7: //FICO Score
+					  		value = Double.parseDouble( listing.getString( attributeNames[i] ).substring(0, 2) );
+					  		break;
+					  	case 8: //Prosper Score
+					  		value = listing.getInt( attributeNames[i] )- 1;
+					  		break;
+					  	case 17: //First Recorded Credit Line
+					  		value = dateToDouble( listing.getString(attributeNames[i]));
+					  		break;			  	
+					  	case 34: //Is home owner
+					  		value = listing.getBoolean( attributeNames[i] ) ? 1 : 0;
+					  		break;
+					  	case 35: //Prosper Rating
+					  		switch(listing.getString( attributeNames[i] ))
+					  		{
+						  		case "A":
+						  			value = 0;
+						  			break;
+						  		case "AA":
+						  			value = 1;
+						  			break;
+						  		case "B":
+						  			value = 2;
+						  			break;
+						  		case "C":
+						  			value = 3;
+						  			break;
+						  		case "D":
+						  			value = 4;
+						  			break;
+						  		case "E":
+						  			value = 5;
+						  			break;
+						  		case "HR":
+						  			value = 6;
+						  			break;
+						  		default:
+						  			value = -1;
+					  		}
+					  		break;
+					  	case 36: //Label
+					  		value = 0; //?
+					  		break;
+					  	case 37: //Loan ID
+					  		value = listing.getInt(attributeNames[i]);
+					  		break;
+					  	//Don't have the following attributes - Use median values
+					  	case 11: //Months Employed
+					  		value = 70;
+					  		break;
+					  	case 24: //Installment Balance
+					  		value = 17597;
+					  		break;
+					  	case 25: //Real Estate Balance
+					  		value = 29293;
+					  		break;
+					  	case 27: //Real Estate Payment
+					  		value = 370;
+					  		break;			  		
+					  	default:
+					  		value = listing.getDouble( attributeNames[i] );
+					  }
+					  inst.setValue( aAttributes.get(i), value );
 				  }
-				  inst.setValue( aAttributes.get(i), value );
-			  }
-			  lProsperData.add( inst );		  
+				  lProsperData.add( inst );
+			} catch (Exception e) {
+				//Failed to parse attributes
+				System.out.println( "Failed to parse attributes.  Skipping listing" );
+			}		  
 		  }
 		return lProsperData;
 	}	
