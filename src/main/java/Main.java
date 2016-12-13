@@ -72,8 +72,8 @@ public class Main {
 	  "listing_number"};
 	
 	public static void main(String[] args) {
-		//port(Integer.valueOf(System.getenv("PORT")));
-	    //staticFileLocation("/public");
+		port(Integer.valueOf(System.getenv("PORT")));
+	    staticFileLocation("/public");
 	    
 	    
 	    ArrayList<Attribute> lAttributes = initializeAttributes();
